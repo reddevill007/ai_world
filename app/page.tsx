@@ -1,10 +1,10 @@
 "use client"
 
-import { useState } from "react";
 import Chats from "@/components/Chats";
-import Typing from "@/components/Typing";
 import InitialUI from "@/components/InitialUI";
+import Typing from "@/components/Typing";
 import { run } from "@/utils/action";
+import { useState } from "react";
 
 interface Chat {
     role: "user" | "model";
@@ -22,32 +22,36 @@ export default function Home() {
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+        e.preventDefault()
         setTyping(true)
-        addChat("user", userPrompt);
-        const response = await run(userPrompt, history);
+        addChat("user", userPrompt)
+        const response = await run(userPrompt, history)
+        console.log(response);
+
         setUserPrompt("")
-        addChat("model", response);
+        addChat("model", response)
+
         setTyping(false)
     }
 
     return (
         <div className="max-w-[50%] mx-auto h-screen relative flex flex-col">
-            {/* Chats */}
-            <div className="p-5 w-full max-h-[calc(100vh-100px)] overflow-y-auto scroll-bar flex flex-col gap-4 flex-1 relative">
-                {history.length > 0 ? (
-                    <Chats history={history} />
-                ) : (
-                    <InitialUI />
-                )}
-                <Typing typing={typing} />
+            <div className="p-5 w-full max-h-[calc(100vh-100px)] overflow-y-auto scroll-bar flex flex-col gap-4">
+                {
+                    history.length > 0 ? (
+                        <Chats history={history} />
+                    ) : (
+                        <InitialUI />
+                    )
+                }
+                {typing && <Typing typing={typing} />}
             </div>
             <div className="w-[50%] h-20 fixed bottom-0 left-1/2 -translate-x-1/2 flex items-center justify-center">
                 <form onSubmit={handleSubmit} className="w-full">
-                    <textarea
+                    <input
                         autoFocus
+                        type="text"
                         value={userPrompt}
-                        rows={2}
                         onChange={e => setUserPrompt(e.target.value)}
                         className="w-full p-2 border rounded bg-[#212121] outline-none"
                         placeholder="Type here..."

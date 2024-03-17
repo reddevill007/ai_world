@@ -1,8 +1,8 @@
 import React from 'react'
-import MessageBox from './MessageBox'
+import MessgeBox from './MessgeBox';
 
-interface ChatsProps {
-    history: Chat[]
+interface ChatProps {
+    history: Chat[];
 }
 
 interface Chat {
@@ -10,14 +10,14 @@ interface Chat {
     parts: string;
 }
 
-const Chats = ({ history }: ChatsProps) => {
+const Chats = ({ history }: ChatProps) => {
     return (
         <>
             {
                 history.map((chats, i) => (
-                    <div>
-                        <MessageBox chats={chats} i={i} />
-                        <div className='bg-gray-600 bg-opacity-40 w-[90%] h-[1px] mx-auto my-6' />
+                    <div key={i} className='text-white'>
+                        <MessgeBox chats={chats} />
+                        <div className='bg-gray-600 h-[1px] bg-opacity-40 w-[90%] mx-auto my-6' />
                     </div>
                 ))
             }
